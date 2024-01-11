@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "398162126375",
+    "project_id": "snacz-ff47d",
+    "storage_bucket": "snacz-ff47d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398162126375:android:6476ae02afe7d29a381002",
+        "android_client_info": {
+          "package_name": "com.example.snacz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyxpEa2r62ymt40K9DLXOR_eyOD4C3cVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
