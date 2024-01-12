@@ -1,3 +1,23 @@
 <resources>
+
+
     <string name="app_name">snacz</string>
+
+
+    //activity_user_info
+    <string name="create_acc_btn">Create an account</string>
+    <string name="login_btn">Login</string>
+    <string name="signup_btn">Sign-up</string>
+    <string name="login_page_sub">Don\'t miss any moment</string>
+
+
+
+
+
+    //descriptions
+    <string name="user_info_vector_description">popcorn image</string>
+
+
+
 </resources>
+

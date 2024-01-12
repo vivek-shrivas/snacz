@@ -13,6 +13,15 @@
         android:theme="@style/Theme.Snacz"
         tools:targetApi="31">
         <activity
+            android:name=".activity_signup"
+            android:exported="false" />
+        <activity
+            android:name=".activity_login"
+            android:exported="false" />
+        <activity
+            android:name=".activity_user_info"
+            android:exported="false" />
+        <activity
             android:name=".activity_splash"
             android:exported="true">
             <intent-filter>
@@ -23,8 +32,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
