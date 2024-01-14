@@ -11,11 +11,22 @@
     <string name="login_page_sub">Don\'t miss any moment</string>
 
 
-
-
-
     //descriptions
     <string name="user_info_vector_description">popcorn image</string>
+
+
+    //Bottom navigation view item names
+    <string name="home_btn">Home</string>
+    <string name="menu_btn">Menu</string>
+    <string name="search_btn">Search</string>
+
+
+
+
+    //menu fragment
+    <string name="filter_veg">Veg</string>
+    <string name="filter_non_veg">Non-veg</string>
+    <string name="menu_heading">Our Menu</string>
 
 
 
