@@ -2,10 +2,12 @@ package com.example.snacz;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -40,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
                 else if (id==R.id.search){
                     loadFrag(new search(),false);
                 }
+                // Clear color filter for all items
+                for (int i = 0; i < bnView.getMenu().size(); i++) {
+                    MenuItem menuItem = bnView.getMenu().getItem(i);
+                    menuItem.getIcon().setColorFilter(null);
+                }
+                // Set color filter for the selected item
+
+                item.getIcon().setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.selected_color), PorterDuff.Mode.SRC_IN);
+
                 return true;
             }
         });

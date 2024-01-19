@@ -27,8 +27,17 @@
     <string name="filter_veg">Veg</string>
     <string name="filter_non_veg">Non-veg</string>
     <string name="menu_heading">Our Menu</string>
+    <string name="Add_symbol">Add +</string>
+    <string name="sub_menu_heading">Sharing combos</string>
 
 
+    //card view
+
+    <string name="card_img_desc">card img</string>
+
+
+    //menu sidebar
+    <string name="sidebar_img">sidebar image</string>
 
 </resources>
 

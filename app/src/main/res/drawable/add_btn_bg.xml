@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/add_to_cart_button_background.xml -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+ <!-- Green color, you can adjust this -->
+
+    <!-- Rounded corners for the button -->
+    <corners android:radius="8dp" />
+
+    <!-- Optional: Border for the button -->
+    <stroke
+        android:width="1dp"
+        android:color="#0F0F0F" /> <!-- Darker green color, you can adjust this -->
+
+</shape>
