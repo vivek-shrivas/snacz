@@ -7,8 +7,6 @@
     <color name="yellow">#FDD835</color>
     <color name="background">#DFDEDA</color>
     <color name="red">#DFDEDA</color>
-    <!-- res/values/colors.xml -->
-        <color name="selected_color">#FFDB3E</color> <!-- Replace with your desired color for selected items -->
-        <color name="unselected_color">#4C4B4B</color> <!-- Replace with your desired color for unselected items -->
+    <!-- res/values/colors.xml --><!-- Replace with your desired color for unselected items -->
 
 </resources>

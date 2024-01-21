@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -35,28 +36,23 @@ public class MainActivity extends AppCompatActivity {
                 if (id == R.id.home)
                 {
                     loadFrag(new home(),true);
+                    configureBottomNavigationTint();
                 }
                 else if (id==R.id.menu) {
                     loadFrag(new menu(),false);
+                    configureBottomNavigationTint();
                 }
                 else if (id==R.id.search){
                     loadFrag(new search(),false);
+                    configureBottomNavigationTint();
                 }
-                // Clear color filter for all items
-                for (int i = 0; i < bnView.getMenu().size(); i++) {
-                    MenuItem menuItem = bnView.getMenu().getItem(i);
-                    menuItem.getIcon().setColorFilter(null);
-                }
-                // Set color filter for the selected item
-
-                item.getIcon().setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.selected_color), PorterDuff.Mode.SRC_IN);
-
                 return true;
             }
         });
 
         // bottom navigation item default selection
         bnView.setSelectedItemId(R.id.home);
+        configureBottomNavigationTint();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
@@ -75,7 +71,14 @@ public class MainActivity extends AppCompatActivity {
             ft.replace(R.id.MainFrame,fragment);
             ft.commit();
         }
-
-
     }
+
+    private void configureBottomNavigationTint() {
+        // Use the selector directly as a ColorStateList
+        ColorStateList colorStateList = ContextCompat.getColorStateList(this, R.color.bottom_nav_selected_color);
+
+        // Apply the ColorStateList to the BottomNavigationView
+        bnView.setItemIconTintList(colorStateList);
+    }
+
 }
