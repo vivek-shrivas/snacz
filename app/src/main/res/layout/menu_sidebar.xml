@@ -2,37 +2,39 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/background">
 
     <LinearLayout
         android:layout_width="88dp"
         android:layout_height="89dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="5dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_gravity="start"
             app:cardCornerRadius="100dp">
 
             <ImageView
                 android:id="@+id/menu_sidebar_img"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/popcorn"
-                android:contentDescription="@string/sidebar_img"/>
+                android:contentDescription="@string/sidebar_img"
+                app:srcCompat="@drawable/popcorn" />
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/menu_sidebar_subtext"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="sharing combos"
-            android:textAlignment="center"
+
             android:textStyle="normal" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

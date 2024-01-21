@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
     android:id="@+id/home"
     android:title="@string/home_btn"
-    android:icon="@drawable/baseline_home_24"/>
+    android:icon="@drawable/baseline_home_24"
+        app:itemBackground="@drawable/white_bg_rectangle"/>
 
     <item
         android:id="@+id/menu"
         android:title="@string/menu_btn"
-        android:icon="@drawable/food_menu"/>
+        android:icon="@drawable/food_menu"
+        app:itemBackground="@drawable/white_bg_rectangle"/>
 
     <item
         android:id="@+id/search"
         android:title="@string/search_btn"
-        android:icon="@drawable/baseline_search_24"/>
+        android:icon="@drawable/baseline_search_24"
+        app:itemBackground="@drawable/white_bg_rectangle"
+        />
 </menu>

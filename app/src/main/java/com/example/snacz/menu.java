@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,24 +34,43 @@ public class menu extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        menuItems = new ArrayList<>(); // Initialize the class member variable
-    }
+        menuItems = new ArrayList<>();
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        // Initialize RecyclerView and adapter
-        RecyclerView recyclerView = rootView.findViewById(R.id.menu_card_recycler);
+        // Initialize RecyclerView for menu cards
+        RecyclerView menuRecyclerView = rootView.findViewById(R.id.menu_card_recycler);
         menuAdapter = new menu_item_adapter(menuItems); // Initialize the adapter
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(menuAdapter);
+        menuRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        menuRecyclerView.setAdapter(menuAdapter);
+
+        // Initialize RecyclerView for sidebar
+        RecyclerView sidebarRecyclerView = rootView.findViewById(R.id.menu_sidebar);
+
+        // Create sidebar items
+
+        List<SidebarItem> sidebarItems = new ArrayList<>();
+        sidebarItems.add(new SidebarItem(R.drawable.festive_sharing, "Festive sharing"));
+        sidebarItems.add(new SidebarItem(R.drawable.burger_wraps, "Burger & wraps"));
+        sidebarItems.add(new SidebarItem(R.drawable.meals, "Meals"));
+        sidebarItems.add(new SidebarItem(R.drawable.deserts, "Deserts"));
+        sidebarItems.add(new SidebarItem(R.drawable.fries_sides, "Fries"));
+        sidebarItems.add(new SidebarItem(R.drawable.saving_combos, "Saving combos"));
+        // Add more sidebar items as needed
+        // Set up the RecyclerView and adapter for the sidebar
+        SidebarAdapter sidebarAdapter = new SidebarAdapter(requireContext(), sidebarItems);
+        sidebarRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        sidebarRecyclerView.setAdapter(sidebarAdapter);
 
         // Fetch data from Firebase
         fetchDataFromFirebase();
 
         return rootView;
     }
+
 
     private void fetchDataFromFirebase() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("menu");

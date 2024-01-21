@@ -88,7 +88,7 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/add_btn_bg"
 
-                    android:backgroundTint="#FDD835"
+                    android:backgroundTint="@color/yellow"
                     android:text="@string/Add_symbol" />
             </LinearLayout>
 

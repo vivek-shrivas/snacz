@@ -22,9 +22,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            app:itemIconTint="@color/yellow"
+            android:background="@color/white"
+            android:backgroundTintMode="multiply"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:paddingBottom="0dp"
+            app:backgroundTint="@color/background"
+            app:elevation="5dp"
             app:itemBackground="@color/white"
-            app:menu="@menu/bottom_nav_menu"/>
+            app:itemIconTint="@color/bottom_nav_selected_color"
+            app:itemRippleColor="@color/background"
+            app:menu="@menu/bottom_nav_menu" />
 
     </RelativeLayout>
 
