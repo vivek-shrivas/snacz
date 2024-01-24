@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primary">#F7F7F2</color>
-    <color name="black">#2b2b2b</color>
+    <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
     <color name="light_red">#DCA2A2</color>
-    <color name="yellow">#ffbc0b</color>
-    <color name="background">#fbf6f0</color>
-    <color name="red">#db0007</color>
+    <color name="yellow">#FDD835</color>
+    <color name="background">#DFDEDA</color>
+    <color name="red">#DFDEDA</color>
+    <!-- res/values/colors.xml -->
+        <color name="selected_color">#FFDB3E</color> <!-- Replace with your desired color for selected items -->
+        <color name="unselected_color">#4C4B4B</color> <!-- Replace with your desired color for unselected items -->
 
-    //menu card
-    <color name="menu_card_color">#fff8e6</color>
-        <color name="blue">#0000FF</color>
-        <color name="brown">#FFB545</color>
-        <color name="grey">#CDC7C7</color>
 </resources>
