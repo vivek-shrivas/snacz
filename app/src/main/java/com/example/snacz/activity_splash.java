@@ -26,8 +26,15 @@ public class activity_splash extends AppCompatActivity {
 
         // Set a listener for video completion
         videoViewSplash.setOnCompletionListener(mp -> {
-            // Jump to the main activity after the video finishes playing
-            Intent intent = new Intent(activity_splash.this, MainActivity.class);
+
+            String authToken = SharedPreferencesManager.getInstance(this).getAuthToken();
+            // Jump to the authentication activities after the video finishes playing
+            Intent intent;
+            if (authToken != null) {
+                intent = new Intent(activity_splash.this, MainActivity.class);
+            } else {
+                intent = new Intent(activity_splash.this, PhoneNumberEntryActivity.class);
+            }
             startActivity(intent);
             finish(); // Close the splash activity
         });

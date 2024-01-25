@@ -26,6 +26,14 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".PhoneNumberEntryActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".OtpVerificationActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
