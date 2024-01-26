@@ -57,5 +57,9 @@
     //buttons
     <string name="back"> &lt; Back</string>
 
+
+    //login
+    <string name="resend_code_in">Resend code in : %d</string>
+
 </resources>
 

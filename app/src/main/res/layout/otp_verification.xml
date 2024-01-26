@@ -122,6 +122,19 @@
                             android:text="resend"
                             android:textColor="@color/blue" />
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/countDownTimer"
+                        android:layout_width="214dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/black"
+                        android:text=""
+                        app:layout_constraintBottom_toTopOf="@+id/verifyButton"
+                        app:layout_constraintEnd_toEndOf="@+id/otpEditText"
+                        app:layout_constraintHorizontal_bias="0.497"
+                        app:layout_constraintStart_toStartOf="@+id/otpEditText"
+                        app:layout_constraintTop_toBottomOf="@+id/otpEditText" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>

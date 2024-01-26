@@ -1,10 +1,13 @@
 package com.example.snacz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -18,6 +21,7 @@ public class PhoneNumberEntryActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText mobileNumberEditText;
     private Button requestOtpButton;
+    private String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +36,27 @@ public class PhoneNumberEntryActivity extends AppCompatActivity {
         requestOtpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phoneNumber = mobileNumberEditText.getText().toString().trim();
-                if (!phoneNumber.isEmpty()) {
-                    startPhoneNumberVerification(phoneNumber);
+                phoneNumber = mobileNumberEditText.getText().toString().trim();
+                if (isValidPhoneNumber(phoneNumber)) {
+                    if (!phoneNumber.startsWith("+91")) {
+                        phoneNumber = "+91" + phoneNumber;
+                        startPhoneNumberVerification(phoneNumber);
+                    }
+                }
+                else{
+                    String message="Enter valid Phone number";
+                    Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
+//check if the phone number is valid or not
+    private static boolean isValidPhoneNumber(String phoneNumber) {
+        // Null check and then check if the trimmed string contains only digits and has a length of 10
+        return phoneNumber != null  && phoneNumber.trim().length() == 10;
+    }
+
 
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -56,8 +74,10 @@ public class PhoneNumberEntryActivity extends AppCompatActivity {
                         // for later use when the user enters the OTP.
                         Intent intent = new Intent(PhoneNumberEntryActivity.this, OtpVerificationActivity.class);
                         intent.putExtra("verificationId", verificationId);
+                        intent.putExtra("phoneNumber",phoneNumber);
                         startActivity(intent);
                     }
+
 
                     @Override
                     public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
