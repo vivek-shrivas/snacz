@@ -5,7 +5,7 @@ public class User {
     private String username;
     private String email;
     private String phoneNumber;
-    private Cart cart;
+    private Order order;
 
 
     //Default constructor
@@ -16,7 +16,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.cart = new Cart();
+        this.order = new Order();
     }
 
     // Getter and setter methods for user information
@@ -54,12 +54,12 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setCart(Order order) {
+        this.order = order;
     }
 
-    public Cart getCart() {
-        return cart;
+    public Order getCart() {
+        return order;
     }
 
     // Additional methods as needed

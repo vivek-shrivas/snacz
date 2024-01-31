@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.VideoView;
 
 public class activity_splash extends AppCompatActivity {
@@ -17,7 +18,6 @@ public class activity_splash extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         videoViewSplash = findViewById(R.id.splash_cnt);
-        // Set video file path or URI to the videoView
         String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.splash;
         videoViewSplash.setVideoPath(videoPath);
 
@@ -26,24 +26,25 @@ public class activity_splash extends AppCompatActivity {
 
         // Set a listener for video completion
         videoViewSplash.setOnCompletionListener(mp -> {
+            // Delay the activity transition after the video finishes playing
+            new Handler().postDelayed(() -> {
+                String authToken = SharedPreferencesManager.getInstance(activity_splash.this).getAuthToken();
+                Intent intent = (authToken != null) ?
+                        new Intent(activity_splash.this, MainActivity.class) :
+                        new Intent(activity_splash.this, PhoneNumberEntryActivity.class);
 
-            String authToken = SharedPreferencesManager.getInstance(this).getAuthToken();
-            // Jump to the authentication activities after the video finishes playing
-            Intent intent;
-            if (authToken != null) {
-                intent = new Intent(activity_splash.this, MainActivity.class);
-            } else {
-                intent = new Intent(activity_splash.this, PhoneNumberEntryActivity.class);
-            }
-            startActivity(intent);
-            finish(); // Close the splash activity
+                startActivity(intent);
+                finish(); // Close the splash activity
+            }, 1200); // Adjust the delay time (in milliseconds) as needed
         });
+    }
 
-        // Stop video playback after 2 seconds (if video is shorter than 2 seconds)
-        videoViewSplash.postDelayed(() -> {
-            if (videoViewSplash.isPlaying()) {
-                videoViewSplash.stopPlayback();
-            }
-        }, 2400);
+    // Override onPause to stop video playback when the activity is paused
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (videoViewSplash.isPlaying()) {
+            videoViewSplash.stopPlayback();
+        }
     }
 }

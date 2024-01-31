@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class SidebarAdapter extends RecyclerView.Adapter<SidebarAdapter.ViewHolder> {
-    private List<SidebarItem> sidebarItems;
+    private List<Category> categoryList;
     private Context context;
 
-    public SidebarAdapter(Context context, List<SidebarItem> sidebarItems) {
+    public SidebarAdapter(Context context, List<Category> categoryList) {
         this.context = context;
-        this.sidebarItems = sidebarItems;
+        this.categoryList = categoryList;
     }
 
     @NonNull
@@ -27,13 +27,13 @@ public class SidebarAdapter extends RecyclerView.Adapter<SidebarAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SidebarItem sidebarItem = sidebarItems.get(position);
-        holder.bind(sidebarItem);
+        Category category = categoryList.get(position);
+        holder.bind(category);
     }
 
     @Override
     public int getItemCount() {
-        return sidebarItems.size();
+        return categoryList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -46,9 +46,9 @@ public class SidebarAdapter extends RecyclerView.Adapter<SidebarAdapter.ViewHold
             sidebarSubtextView = itemView.findViewById(R.id.menu_sidebar_subtext);
         }
 
-        public void bind(SidebarItem sidebarItem) {
-            sidebarImageView.setImageResource(sidebarItem.getImageResId());
-            sidebarSubtextView.setText(sidebarItem.getSubtext());
+        public void bind(Category category) {
+            category.setCategoryImage(category.getCategoryImage());
+            category.setCategoryName(category.getCategoryName());
         }
     }
 }

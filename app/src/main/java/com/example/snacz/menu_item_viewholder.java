@@ -20,10 +20,10 @@ public class menu_item_viewholder extends RecyclerView.ViewHolder {
         foodDesc=itemView.findViewById(R.id.foodDesc);
         price=itemView.findViewById(R.id.price);
     }
-    public void bind(menu_item_model menu_item){
-        foodName.setText(menu_item.getFoodName());
-        foodDesc.setText(menu_item.getFoodDesc());
-        price.setText(menu_item.getPrice());
+    public void bind(Item item){
+        foodName.setText(item.getItemName());
+        foodDesc.setText(item.getItemDesc());
+        price.setText(item.getPrice());
     }
 
 

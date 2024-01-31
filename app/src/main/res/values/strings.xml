@@ -46,7 +46,7 @@
     <string name="Takeaway">Takeaway</string>
 
     //menu cards textview
-    <string name="Festive_sharing">Festive Sharing</string>
+    <string name="Festive_sharing">Festive sharing</string>
     <string name="Burger_wraps">Burger &amp; wraps</string>
     <string name="Meals">Meals</string>
     <string name="Saving_meals">Saving Meals</string>

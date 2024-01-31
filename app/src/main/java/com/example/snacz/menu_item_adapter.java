@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class menu_item_adapter extends RecyclerView.Adapter<menu_item_viewholder> {
-    private List<menu_item_model> menu_item_modelList;
-    public menu_item_adapter(List<menu_item_model> menu_item_modelList){
-        this.menu_item_modelList=menu_item_modelList;
+    private List<Item> itemList;
+    public menu_item_adapter(List<Item> menu_item_modelList){
+        this.itemList=menu_item_modelList;
     }
 
     @NonNull
@@ -25,15 +25,15 @@ public class menu_item_adapter extends RecyclerView.Adapter<menu_item_viewholder
 
     @Override
     public void onBindViewHolder(@NonNull menu_item_viewholder holder, int position) {
-        menu_item_model menuItemModel=menu_item_modelList.get(position);
-        holder.bind(menuItemModel);
+        Item item=itemList.get(position);
+        holder.bind(item);
 
     }
 
 
     @Override
     public int getItemCount() {
-        return menu_item_modelList.size();
+        return itemList.size();
     }
 
 }

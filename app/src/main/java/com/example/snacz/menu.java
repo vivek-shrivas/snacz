@@ -12,7 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +27,7 @@ import java.util.List;
 
 
 public class menu extends Fragment {
-    private List<menu_item_model> menuItems;
+    private List<Item> items;
     private menu_item_adapter menuAdapter; // Declare the adapter as a class member
 
     public menu() {
@@ -34,7 +37,7 @@ public class menu extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        menuItems = new ArrayList<>();
+        items = new ArrayList<>();
 
     }
     @Override
@@ -43,25 +46,14 @@ public class menu extends Fragment {
 
         // Initialize RecyclerView for menu cards
         RecyclerView menuRecyclerView = rootView.findViewById(R.id.menu_card_recycler);
-        menuAdapter = new menu_item_adapter(menuItems); // Initialize the adapter
+        menuAdapter = new menu_item_adapter(items); // Initialize the adapter
         menuRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         menuRecyclerView.setAdapter(menuAdapter);
 
         // Initialize RecyclerView for sidebar
         RecyclerView sidebarRecyclerView = rootView.findViewById(R.id.menu_sidebar);
 
-        // Create sidebar items
-
-        List<SidebarItem> sidebarItems = new ArrayList<>();
-        sidebarItems.add(new SidebarItem(R.drawable.festive_sharing, "Festive sharing"));
-        sidebarItems.add(new SidebarItem(R.drawable.burger_wraps, "Burger & wraps"));
-        sidebarItems.add(new SidebarItem(R.drawable.meals, "Meals"));
-        sidebarItems.add(new SidebarItem(R.drawable.deserts, "Deserts"));
-        sidebarItems.add(new SidebarItem(R.drawable.fries_sides, "Fries"));
-        sidebarItems.add(new SidebarItem(R.drawable.saving_combos, "Saving combos"));
-        // Add more sidebar items as needed
-        // Set up the RecyclerView and adapter for the sidebar
-        SidebarAdapter sidebarAdapter = new SidebarAdapter(requireContext(), sidebarItems);
+        SidebarAdapter sidebarAdapter = new SidebarAdapter(requireContext(), null);
         sidebarRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         sidebarRecyclerView.setAdapter(sidebarAdapter);
 
@@ -77,11 +69,14 @@ public class menu extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                menuItems.clear(); // Assuming menuItems is your list where you store menu items
+
+
+                
+                items.clear(); // Assuming menuItems is your list where you store menu items
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    menu_item_model menuItem = snapshot.getValue(menu_item_model.class);
-                    menuItems.add(menuItem);
+                    Item item = snapshot.getValue(Item.class);
+                    items.add(item);
                 }
 
                 // Notify the adapter that the data has changed

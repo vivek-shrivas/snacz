@@ -34,6 +34,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
+                        app:tint="@color/black"
                         android:background="@drawable/add_btn_bg"
                         android:backgroundTint="@color/red"
                         android:contentDescription="@string/Delivery"
@@ -99,6 +100,7 @@
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/menuCard1"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="15dp"
@@ -114,22 +116,21 @@
 
                     <ImageView
                         android:id="@+id/menuImg1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
-                        android:foregroundGravity="center"
-                        android:src="@drawable/festive_sharing"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:contentDescription="@string/card_img_desc"
+                        android:foregroundGravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.28" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/menuTxt1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
-                        android:text="@string/Festive_sharing"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/menuImg1"
@@ -375,6 +376,55 @@
                             app:layout_constraintStart_toStartOf="@+id/menuImg6"
                             app:layout_constraintTop_toBottomOf="@+id/menuImg6"
                             app:layout_constraintVertical_bias="0.0"  />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/menuCard7"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/menu_card_color"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="7dp"
+                    app:cardElevation="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/background"
+                    app:cardCornerRadius="15dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/menuImg7"
+                            android:layout_width="90dp"
+                            android:layout_height="88dp"
+                            android:layout_marginTop="16dp"
+                            android:contentDescription="@string/card_img_desc"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.511"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/menuTxt7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="burger sharing"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/menuImg7"
+                            app:layout_constraintStart_toStartOf="@+id/menuImg7"
+                            app:layout_constraintTop_toBottomOf="@+id/menuImg7" />
+                            0" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
