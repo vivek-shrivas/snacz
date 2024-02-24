@@ -21,8 +21,6 @@
     <string name="search_btn">Search</string>
 
 
-
-
     //menu fragment
     <string name="filter_veg">Veg</string>
     <string name="filter_non_veg">Non-veg</string>
@@ -38,7 +36,6 @@
 
     //menu sidebar
     <string name="sidebar_img">sidebar image</string>
-
 
 
     //home top bar
@@ -60,6 +57,8 @@
 
     //login
     <string name="resend_code_in">Resend code in : %d</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
 

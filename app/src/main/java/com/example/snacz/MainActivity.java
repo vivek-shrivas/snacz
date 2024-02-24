@@ -62,9 +62,6 @@ public class MainActivity extends AppCompatActivity {
         // bottom navigation item default selection
         bnView.setSelectedItemId(R.id.home);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-        myRef.setValue("Hello, Android");
     }
 
     public void loadFrag(Fragment fragment, boolean flag) {

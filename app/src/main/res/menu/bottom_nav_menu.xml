@@ -17,6 +17,5 @@
         android:id="@+id/search"
         android:title="@string/search_btn"
         android:icon="@drawable/baseline_search_24"
-        app:itemBackground="@drawable/white_bg_rectangle"
-        />
+        app:itemBackground="@drawable/white_bg_rectangle"/>
 </menu>

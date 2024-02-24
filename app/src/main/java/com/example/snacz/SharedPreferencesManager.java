@@ -12,7 +12,7 @@ public class SharedPreferencesManager {
     private static SharedPreferencesManager instance;
     private final SharedPreferences preferences;
 
-    private SharedPreferencesManager(Context context) {
+    SharedPreferencesManager(Context context) {
         preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 

@@ -103,7 +103,6 @@
                             android:layout_width="90dp"
                             android:layout_height="32dp"
                             android:orientation="horizontal"
-                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.632"
@@ -159,23 +158,6 @@
 
                         </LinearLayout>
 
-                        <Button
-                            android:id="@+id/addBtn"
-                            android:layout_width="60dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="5dp"
-                            android:background="@drawable/add_btn_bg"
-                            android:backgroundTint="@color/yellow"
-                            android:text="@string/Add_symbol"
-                            android:textSize="10dp"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.736"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/foodDesc"
-                            app:layout_constraintVertical_bias="0.39" />
-
                         <TextView
                             android:id="@+id/price"
                             android:layout_width="wrap_content"
@@ -192,6 +174,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

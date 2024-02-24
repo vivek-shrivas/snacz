@@ -30,9 +30,8 @@ public class activity_splash extends AppCompatActivity {
             new Handler().postDelayed(() -> {
                 String authToken = SharedPreferencesManager.getInstance(activity_splash.this).getAuthToken();
                 Intent intent = (authToken != null) ?
-                        new Intent(activity_splash.this, MainActivity.class) :
-                        new Intent(activity_splash.this, PhoneNumberEntryActivity.class);
-
+                        new Intent(activity_splash.this,MainActivity.class) :
+                        new Intent(activity_splash.this,PhoneNumberEntryActivity.class );
                 startActivity(intent);
                 finish(); // Close the splash activity
             }, 1200); // Adjust the delay time (in milliseconds) as needed

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Category {
+
     private String categoryName;
     private String image; // Assuming the image is represented by a URL
     private List<Item> items;
@@ -13,11 +14,14 @@ public class Category {
     }
 
 
+
+
     public Category(String categoryName, String image, List<Item> items) {
         this.categoryName = categoryName;
         this.image = image;
         this.items = items;
     }
+
 
     public String getCategoryName() {
         return categoryName;
@@ -50,4 +54,5 @@ public class Category {
     public void setItems(List<Item> items) {
         this.items = items;
     }
+
 }

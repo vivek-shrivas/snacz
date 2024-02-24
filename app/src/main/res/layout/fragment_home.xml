@@ -4,8 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/primary"
     tools:context=".home"
     android:background="@color/background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/viewCartFrameLayoutHome"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -106,7 +125,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                app:cardBackgroundColor="@color/menu_card_color"
+                app:cardBackgroundColor="@color/primaryMenu"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp">
 
@@ -154,7 +173,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="7dp"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/menu_card_color"
+                    app:cardBackgroundColor="@color/primaryMenu"
                     app:cardElevation="5dp"
                     android:layout_weight="1"
                     android:layout_marginBottom="10dp"
@@ -203,7 +222,7 @@
                     android:layout_marginEnd="15dp"
                     app:cardElevation="5dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/menu_card_color"
+                    app:cardBackgroundColor="@color/primaryMenu"
                     android:background="@color/background"
                     app:cardCornerRadius="15dp">
 
@@ -252,7 +271,7 @@
                     android:id="@+id/menuCard4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/menu_card_color"
+                    app:cardBackgroundColor="@color/primaryMenu"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="7dp"
                     app:cardElevation="5dp"
@@ -296,7 +315,7 @@
                     android:id="@+id/menuCard5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/menu_card_color"
+                    app:cardBackgroundColor="@color/primaryMenu"
                     android:layout_marginEnd="7dp"
                     app:cardElevation="5dp"
                     android:layout_marginBottom="10dp"
@@ -339,7 +358,7 @@
                     android:id="@+id/menuCard6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/menu_card_color"
+                    app:cardBackgroundColor="@color/primaryMenu"
                     android:layout_marginEnd="15dp"
                     app:cardElevation="5dp"
                     android:layout_marginBottom="10dp"
@@ -391,7 +410,7 @@
                     android:id="@+id/menuCard7"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/menu_card_color"
+                    app:cardBackgroundColor="@color/primaryMenu"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="7dp"
                     app:cardElevation="5dp"

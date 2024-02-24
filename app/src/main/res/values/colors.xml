@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#F7F7F2</color>
+    <color name="primary">#fbf6f0</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
     <color name="light_red">#DCA2A2</color>
     <color name="yellow">#FDD835</color>
     <color name="background">#DFDEDA</color>
     <color name="red">#db0007</color>
-
-
-        <color name="selected_color">#FFDB3E</color>
-        <color name="unselected_color">#4C4B4B</color>
-
-
+    <color name="primaryMenu">#fff8e6</color>
+    <color name="selected_color">#FFDB3E</color>
+    <color name="unselected_color">#4C4B4B</color>
     <color name="menu_card_color">#DFDEDA</color>
-
-
     <color name="blue">#0000FF</color>
-        <color name="brown">#FFB545</color>
-        <color name="grey">#CDC7C7</color>
-
+    <color name="brown">#FFB545</color>
+    <color name="grey">#CDC7C7</color>
     <color name="selector_button">#db0007</color>
 </resources>

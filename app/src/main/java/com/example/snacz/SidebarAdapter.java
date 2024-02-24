@@ -1,4 +1,5 @@
 package com.example.snacz;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,15 +8,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class SidebarAdapter extends RecyclerView.Adapter<SidebarAdapter.ViewHolder> {
     private List<Category> categoryList;
     private Context context;
+    private OnCategorySelectedListener onCategorySelectedListener;
 
-    public SidebarAdapter(Context context, List<Category> categoryList) {
+    public SidebarAdapter(Context context, List<Category> categoryList, OnCategorySelectedListener onCategorySelectedListener) {
         this.context = context;
         this.categoryList = categoryList;
+        this.onCategorySelectedListener = onCategorySelectedListener;
     }
 
     @NonNull
@@ -47,8 +51,25 @@ public class SidebarAdapter extends RecyclerView.Adapter<SidebarAdapter.ViewHold
         }
 
         public void bind(Category category) {
-            category.setCategoryImage(category.getCategoryImage());
-            category.setCategoryName(category.getCategoryName());
+            Glide.with(context)
+                    .load(category.getCategoryImage())
+                    .into(sidebarImageView);
+
+            // Set the category name to the TextView
+            sidebarSubtextView.setText(category.getCategoryName());
+
+            // Set an onClickListener for the itemView
+            itemView.setOnClickListener(v -> {
+                // Call the onCategorySelected method of the listener
+                if (onCategorySelectedListener != null) {
+                    onCategorySelectedListener.onCategorySelected(category.getCategoryName());
+                }
+            });
         }
+    }
+
+    // Interface for category selection listener
+    public interface OnCategorySelectedListener {
+        void onCategorySelected(String category);
     }
 }
