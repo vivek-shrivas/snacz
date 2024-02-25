@@ -24,8 +24,8 @@ public class Order {
     public static final int delivery = 1;
     public static final int takeaway = 2;
 
-    public double CGST;
-    public double SGST;
+    public int CGST;
+    public int SGST;
 
     public static Order instance;
 
@@ -51,9 +51,11 @@ public int itemQuantity() {
             for (Item item : this.items) {
                 Quantity+=1;
             }
+            Log.d("total items in cart","items in cart ="+Quantity);
     return Quantity;
 
     }
+
 
     public boolean hasItems() {
         return !items.isEmpty();
@@ -81,11 +83,13 @@ public int itemQuantity() {
 
             // Set the order data based on order type
             userOrderRef = ordersRef.child(orderTypeString).child(uid).child(String.valueOf(timestamp));
-
+            int total;
+            total=order.calculateTotal();
+            total+=order.CGST+order.SGST;
             // Create a map to hold order data including items list
             Map<String, Object> orderData = new HashMap<>();
             orderData.put("orderType", orderTypeString);
-            orderData.put("total", order.calculateTotal());
+            orderData.put("total", total);
             orderData.put("items", order.getItems());
             orderData.put("status","Preparing");
 
@@ -131,14 +135,14 @@ public int itemQuantity() {
         }
         return total;
     }
-    public void calculateGST(double totalAmount) {
+    public void calculateGST(int totalAmount) {
         // Calculate CGST and SGST percentages
-        double cgstPercentage = 9.0; // 9% CGST
-        double sgstPercentage = 9.0; // 9% SGST
+        int cgstPercentage = 9; // 9% CGST
+        int sgstPercentage = 9; // 9% SGST
 
         // Calculate CGST and SGST amounts
-        double cgstAmount = (totalAmount * cgstPercentage) / 100;
-        double sgstAmount = (totalAmount * sgstPercentage) / 100;
+        int cgstAmount = (totalAmount * cgstPercentage) / 100;
+        int sgstAmount = (totalAmount * sgstPercentage) / 100;
 
         // Assign the calculated values to the instance variables
         this.CGST = cgstAmount;

@@ -10,7 +10,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -64,6 +66,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public FrameLayout getViewCartFrameLayoutMenu() {
+        return findViewById(R.id.viewCartFrameLayoutMenu);
+    }
+
+    public TextView getViewCartQuantityTextView() {
+        return findViewById(R.id.viewCartItemQuantity);
+    }
+
+    public TextView getViewCartPriceTextView(){
+        return findViewById(R.id.CartTotal);
+    }
     public void loadFrag(Fragment fragment, boolean flag) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

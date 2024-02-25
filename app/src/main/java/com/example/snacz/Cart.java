@@ -1,6 +1,7 @@
 package com.example.snacz;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -44,41 +45,55 @@ public class Cart extends AppCompatActivity {
         List<Item> itemList = Order.getInstance().getItems();
 
         // Initialize and set the adapter
-        cartAdapter = new CartAdapter(itemList);
+        cartAdapter = new CartAdapter(itemList, this);
         cartRecyclerView.setAdapter(cartAdapter);
 
         calculateGSTAndDisplay();
-    }
+        updateTotalPayable(); // Calculate and display total payable initially
 
+        placeOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Order order = Order.getInstance();
+                Order.getInstance().pushOrderToFirebase(getApplicationContext(), order);
+            }
+        });
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Update adapter data when the activity resumes
         updateData(Order.getInstance().getItems());
+        updateTotalPayable(); // Update total payable whenever activity resumes
     }
 
     private void updateData(List<Item> itemList) {
+
+
         if (cartAdapter != null) {
             cartAdapter.setData(itemList);
-            cartAdapter.notifyDataSetChanged();
         }
     }
 
     private void calculateGSTAndDisplay() {
-        // Get total amount from Order class
-        double totalAmount = Order.getInstance().calculateTotal();
+        int totalAmount = Order.getInstance().calculateTotal();
 
         // Calculate CGST and SGST using Order class method
         Order.getInstance().calculateGST(totalAmount);
 
         // Display total amount, CGST, and SGST in respective TextViews
-        subTotal.setText(String.format("%.2f", totalAmount));
-        CGST.setText(String.format("%.2f", Order.getInstance().CGST));
-        SGST.setText(String.format("%.2f", Order.getInstance().SGST));
+        subTotal.setText(String.valueOf(totalAmount));
+        CGST.setText(String.valueOf(Order.getInstance().CGST));
+        SGST.setText(String.valueOf(Order.getInstance().SGST));
 
         // Calculate total payable amount (Total + CGST + SGST)
-        double totalPayableAmount = totalAmount + Order.getInstance().CGST + Order.getInstance().SGST;
-        totalPayable.setText(String.format("%.2f", totalPayableAmount));
+        int totalPayableAmount = totalAmount + Order.getInstance().SGST + Order.getInstance().CGST;
+        totalPayable.setText(String.valueOf(totalPayableAmount));
+        placeOrderButton.setText(String.valueOf(totalPayableAmount));
+    }
+
+    // Update total payable amount when called
+    public void updateTotalPayable() {
+        calculateGSTAndDisplay();
     }
 }

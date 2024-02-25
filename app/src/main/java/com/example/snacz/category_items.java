@@ -58,13 +58,21 @@ public class category_items extends Fragment {
         // Initialize RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new CategoryItemsAdapter(itemList);
+        adapter = new CategoryItemsAdapter(itemList, getContext());
         recyclerView.setAdapter(adapter);
 
         // Fetch items for the selected category
         fetchItems(selectedCategory);
 
         return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter = new CategoryItemsAdapter(itemList, getContext());
+        recyclerView.setAdapter(adapter);
     }
 
     public void setSelectedCategory(String category) {
@@ -80,7 +88,6 @@ public class category_items extends Fragment {
     }
     private void fetchItems(String categoryName) {
         DatabaseReference categoriesRef = FirebaseDatabase.getInstance().getReference().child("categories");
-
         // Query to find the category node by its categoryName
         Query categoryQuery = categoriesRef.orderByChild("categoryName").equalTo(categoryName);
 

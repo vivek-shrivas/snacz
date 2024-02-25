@@ -1,9 +1,6 @@
 package com.example.snacz;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,21 +12,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.snacz.Item;
+import com.example.snacz.Order;
+import com.example.snacz.R;
 
 import java.util.List;
-import java.util.Objects;
 
 public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdapter.ViewHolder> {
     private List<Item> itemList;
-    public TextView viewCartItemQuantity;
+    private Context context;
+    private Order order;
 
-    public CategoryItemsAdapter(List<Item> itemList) {
+    public CategoryItemsAdapter(List<Item> itemList, Context context) {
         this.itemList = itemList;
+        this.context = context;
+        this.order = Order.getInstance();
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,81 +47,100 @@ public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdap
         Glide.with(holder.itemView.getContext())
                 .load(item.getItemImage())
                 .into(holder.itemImageView);
-        holder.priceTextView.setText(String.valueOf("₹"+item.getPrice()));
+        holder.priceTextView.setText(String.valueOf("₹" + item.getPrice()));
+
+        // Check if the item is already in the order
         if (isItemInOrder(item)) {
-            holder.itemBtnIncreaseQtyDecreaseQtyholder.setVisibility(View.VISIBLE);// Disable button if item is already in cart
-            holder.addBtn.setVisibility(View.GONE);
+            // If the item is in the order, hide the addBtn and show the itemBtnIncreaseQtyDecreaseQtyholder
+            holder.addBtn.setVisibility(View.INVISIBLE);
+            holder.itemBtnIncreaseQtyDecreaseQtyholder.setVisibility(View.VISIBLE);
         } else {
-            holder.itemBtnIncreaseQtyDecreaseQtyholder.setVisibility(View.GONE);
-            holder.addBtn.setVisibility(View.VISIBLE); // Enable button if item is not in cart
+            // If the item is not in the order, show the addBtn and hide the itemBtnIncreaseQtyDecreaseQtyholder
+            holder.addBtn.setVisibility(View.VISIBLE);
+            holder.itemBtnIncreaseQtyDecreaseQtyholder.setVisibility(View.INVISIBLE);
         }
 
         holder.decreaseQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int itemQuantity=item.getItemQuantity();
-                if(itemQuantity<=1){
+                int itemQuantity = item.getItemQuantity();
+                if (itemQuantity <= 1) {
                     holder.itemBtnIncreaseQtyDecreaseQtyholder.setVisibility(View.GONE);
                     holder.addBtn.setVisibility(View.VISIBLE);
-                    Order order=Order.getInstance();
                     order.calculateTotal();
                     order.removeItem(item);
-                    Toast removeToast =Toast.makeText(v.getContext(), "Item removed from cart",Toast.LENGTH_SHORT);
-                    removeToast.show();
-                }
-                else{
+                    updateViewCartVisibility();
+                    notifyDataSetChanged(); // Notify adapter of dataset change
+                } else {
                     item.decreaseQuantity();
                     holder.itemQuantity.setText(String.valueOf(item.getItemQuantity()));
-                    Toast decreaseToast =Toast.makeText(v.getContext(), "Quantity Updated",Toast.LENGTH_SHORT);
-                    decreaseToast.show();
+                    updateViewCartVisibility();
+                    notifyDataSetChanged(); // Notify adapter of dataset change
                 }
-
+                holder.decreaseQuantity.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        holder.increaseQuantity.setEnabled(true);
+                    }
+                }, 1000); // Adjust the delay as needed
             }
         });
-
-
         holder.increaseQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int itemQuantity=item.getItemQuantity();
-                if(itemQuantity>=5){
-                    Toast toast = Toast.makeText(v.getContext(),"Max 5 Qty Allowed",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else{
+                // Disable the button to prevent multiple clicks
+                holder.increaseQuantity.setEnabled(false);
+
+                int itemQuantity = item.getItemQuantity();
+                if (itemQuantity >= 5) {
+                    Toast.makeText(context, "Max 5 Qty Allowed", Toast.LENGTH_SHORT).show();
+                } else {
                     item.increaseQuantity();
                     holder.itemQuantity.setText(String.valueOf(item.getItemQuantity()));
-                    Toast increaseToast =Toast.makeText(v.getContext(), "Quantity Updated in cart",Toast.LENGTH_SHORT);
-                    increaseToast.show();
+                    updateViewCartVisibility();
+                    notifyDataSetChanged(); // Notify adapter of dataset change
                 }
 
+                // Re-enable the button after a delay or when the operation is completed
+                holder.increaseQuantity.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        holder.increaseQuantity.setEnabled(true);
+                    }
+                }, 1000); // Adjust the delay as needed
             }
         });
+
         holder.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isItemInOrder(item)) {
-                    Order order = Order.getInstance();
+                    // Disable the button to prevent multiple clicks
+                    holder.addBtn.setEnabled(false);
                     order.addItem(item);
                     holder.addBtn.setVisibility(View.GONE);
                     holder.itemBtnIncreaseQtyDecreaseQtyholder.setVisibility(View.VISIBLE);
-                    String name=item.getItemName();
                     item.increaseQuantity();
-                    Toast.makeText(v.getContext(), "Added "+name+" to cart", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(v.getContext(), "Item is already in the cart", Toast.LENGTH_SHORT).show();
+                    updateViewCartVisibility();
+                    notifyDataSetChanged(); // Notify adapter of dataset change
+
+                    // Re-enable the button after a delay or when the operation is completed
+                    holder.addBtn.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            holder.addBtn.setEnabled(true);
+                        }
+                    }, 1000); // Adjust the delay as needed
                 }
             }
         });
 
-
     }
+
     @Override
     public int getItemCount() {
-        Log.d("ItemCountDebug", "Item count: " + itemList.size());
         return itemList.size();
     }
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView foodNameTextView;
@@ -127,40 +148,74 @@ public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdap
         public TextView priceTextView;
         public TextView itemQuantity;
         ImageView itemImageView;
-        Button addBtn ,increaseQuantity ,decreaseQuantity;
+        Button addBtn, increaseQuantity, decreaseQuantity;
         LinearLayout itemBtnIncreaseQtyDecreaseQtyholder;
-        FrameLayout viewCartFrameLayoutMenu;
-
-        TextView viewCartItemQuantity;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemImageView=itemView.findViewById(R.id.itemImageView);
+            itemImageView = itemView.findViewById(R.id.itemImageView);
             foodNameTextView = itemView.findViewById(R.id.foodName);
             foodDescTextView = itemView.findViewById(R.id.foodDesc);
             priceTextView = itemView.findViewById(R.id.price);
             addBtn = itemView.findViewById(R.id.addBtn);
-            increaseQuantity=itemView.findViewById(R.id.increaseQuantity);
-            decreaseQuantity=itemView.findViewById(R.id.decraseQuantity);
-            itemQuantity=itemView.findViewById(R.id.itemQuantity);
-            itemBtnIncreaseQtyDecreaseQtyholder=itemView.findViewById(R.id.itemBtnIncreaseQtyDecreaseQtyholder);
-            viewCartFrameLayoutMenu=itemView.findViewById(R.id.viewCartFrameLayoutMenu);
+            increaseQuantity = itemView.findViewById(R.id.increaseQuantity);
+            decreaseQuantity = itemView.findViewById(R.id.decraseQuantity);
+            itemQuantity = itemView.findViewById(R.id.itemQuantity);
+            itemBtnIncreaseQtyDecreaseQtyholder = itemView.findViewById(R.id.itemBtnIncreaseQtyDecreaseQtyholder);
         }
-
     }
+
     private boolean isItemInOrder(Item item) {
-        Order order = Order.getInstance();
         List<Item> orderItems = order.getItems();
 
         // Loop through each item in the orderItems list
         for (Item orderItem : orderItems) {
             // Check if the item_id of the current orderItem matches the item_id of the item we're looking for
-            if (Objects.equals(orderItem.getItemId(), item.getItemId())) {
+            if (orderItem.getItemId().equals(item.getItemId())) {
                 // Item with the same ID found in the order, return true
                 return true;
             }
         }
         // Item with the same ID not found in the order, return false
         return false;
+    }
+
+    private void updateViewCartVisibility() {
+        MainActivity mainActivity = (MainActivity) context;
+        if (mainActivity != null) {
+            FrameLayout viewCartFrameLayoutMenu = mainActivity.getViewCartFrameLayoutMenu();
+            if (order.itemQuantity() > 0) {
+                viewCartFrameLayoutMenu.setVisibility(View.VISIBLE);
+                updateItemCount();
+                updatePrice();
+            } else {
+                viewCartFrameLayoutMenu.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    private void updateItemCount() {
+        MainActivity mainActivity = (MainActivity) context;
+        if (mainActivity != null) {
+            TextView viewCartTextView = mainActivity.getViewCartQuantityTextView();
+            if (order.itemQuantity() > 0) {
+                viewCartTextView.setText(String.valueOf(order.itemQuantity() + " Items   |"));
+            } else {
+                viewCartTextView.setText(String.valueOf(order.itemQuantity()));
+            }
+        }
+    }
+
+    private void updatePrice() {
+        MainActivity mainActivity = (MainActivity) context;
+        if (mainActivity != null) {
+            TextView viewCartPriceTextView = mainActivity.getViewCartPriceTextView();
+            viewCartPriceTextView.setText(String.valueOf("₹" + order.calculateTotal()));
+        }
+    }
+
+    public void setData(List<Item> newData) {
+        this.itemList = newData;
+        notifyDataSetChanged(); // Notify adapter of dataset change
     }
 }
