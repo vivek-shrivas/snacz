@@ -1,7 +1,7 @@
 package com.example.snacz;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +18,11 @@ import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private List<Item> itemList;
-
-    private Order order;
     private Context context;
 
     public CartAdapter(List<Item> itemList, Context context) {
         this.itemList = itemList;
         this.context = context;
-        this.order = Order.getInstance();
     }
 
     @NonNull
@@ -40,7 +37,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         Item item = itemList.get(position);
         holder.foodNameTextView.setText(item.getItemName());
         holder.foodDescTextView.setText(item.getItemDesc());
-        holder.priceTextView.setText(String.valueOf(item.getPrice()));
+        holder.priceTextView.setText(String.valueOf("₹"+String.valueOf(item.getPrice())));
+        holder.itemQuantity.setText(String.valueOf(item.getItemQuantity()));
 
         if (holder.itemView.getContext() != null && item.getItemImage() != null) {
             Glide.with(holder.itemView.getContext())
@@ -49,6 +47,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
     }
 
+
     public void setData(List<Item> newData) {
         this.itemList = newData;
         notifyDataSetChanged(); // Notify adapter of dataset change
@@ -56,7 +55,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        if (itemList.isEmpty()) {
+            // If itemList is empty, navigate back to fragment_menu
+            Intent intent = new Intent(context, MainActivity.class); // Replace YourActivityName with the appropriate activity name
+            context.startActivity(intent);
+            return 0; // Return 0 to indicate no items in the list
+        } else {
+            // If itemList is not empty, return the actual item count
+            return itemList.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -75,7 +82,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             increaseQuantity = itemView.findViewById(R.id.increaseQuantity);
             decreaseQuantity = itemView.findViewById(R.id.decraseQuantity);
             itemQuantity = itemView.findViewById(R.id.itemQuantity);
-            itemImageView=itemView.findViewById(R.id.itemImageView);
+            itemImageView = itemView.findViewById(R.id.itemImageView);
 
             increaseQuantity.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,8 +91,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     if (position != RecyclerView.NO_POSITION) {
                         Item item = itemList.get(position); // Access itemList from the instance
                         item.increaseQuantity();
+                        notifyDataSetChanged();
                         itemQuantity.setText(String.valueOf(item.getItemQuantity()));
-                        ((Cart)context).updateTotalPayable(); // Update total payable in Cart activity
+                        ((Cart) context).updateTotalPayable(); // Update total payable in Cart activity
                     }
                 }
             });
@@ -102,9 +110,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                             if (item.getItemQuantity() < 1) {
                                 itemList.remove(position);
                                 notifyItemRemoved(position);
+                                notifyDataSetChanged();
                                 notifyItemRangeChanged(position, itemList.size());
                             }
-                            ((Cart)context).updateTotalPayable(); // Update total payable in Cart activity
+                            ((Cart) context).updateTotalPayable(); // Update total payable in Cart activity
                         }
                     }
                 }

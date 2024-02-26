@@ -33,6 +33,8 @@ public class OtpVerificationActivity extends AppCompatActivity {
     private Button verifyButton;
     private TextView resendOtp;
     private TextView countdownTimerText;
+
+    private String userName;
     private static final long COUNTDOWN_INTERVAL = 1000; // 1 second
     private static final long COUNTDOWN_TIME = 60000; // 60 seconds
     private CountDownTimer countDownTimer;
@@ -50,6 +52,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
         countdownTimerText = findViewById(R.id.countDownTimer);
 
         phoneNumber = getIntent().getStringExtra("phoneNumber");
+        userName = getIntent().getStringExtra("userName");
         verificationId = getIntent().getStringExtra("verificationId");
         startCountdownTimer();
         verifyButton.setOnClickListener(new View.OnClickListener() {
@@ -94,9 +97,11 @@ public class OtpVerificationActivity extends AppCompatActivity {
                             // For example, get the UID of the authenticated user
                             String uid = mAuth.getCurrentUser().getUid();
 
-                            // Save UID as authToken using SharedPreferencesManager
                             SharedPreferencesManager.getInstance(getApplicationContext()).saveAuthToken(uid);
 
+                            SharedPreferencesManager.getInstance(getApplicationContext()).savePhoneNumber(phoneNumber);
+
+                            SharedPreferencesManager.getInstance(getApplicationContext()).saveUserName(userName);
                             // Navigate to the main activity
                             startActivity(new Intent(OtpVerificationActivity.this, MainActivity.class));
                             finish();

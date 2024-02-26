@@ -40,6 +40,10 @@
         <activity
             android:name=".Cart"
             android:exported="true" />
+
+        <activity
+            android:name=".menu"
+            android:exported="true" />
     </application>
 
 </manifest>

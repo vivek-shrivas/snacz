@@ -19,6 +19,9 @@
     <string name="home_btn">Home</string>
     <string name="menu_btn">Menu</string>
     <string name="search_btn">Search</string>
+    <string name="account_btn">Account</string>
+    <string name="cart">Cart</string>
+
 
 
     //menu fragment
@@ -39,7 +42,7 @@
 
 
     //home top bar
-    <string name="Delivery">Delivery</string>
+    <string name="Dine_in">Dine in</string>
     <string name="Takeaway">Takeaway</string>
 
     //menu cards textview

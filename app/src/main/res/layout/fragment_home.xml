@@ -37,7 +37,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
@@ -56,9 +56,9 @@
                         app:tint="@color/black"
                         android:background="@drawable/add_btn_bg"
                         android:backgroundTint="@color/red"
-                        android:contentDescription="@string/Delivery"
-                        android:padding="10dp"
-                        android:src="@drawable/delivery" />
+                        android:contentDescription="@string/Dine_in"
+                        android:padding="5dp"
+                        android:src="@drawable/dine_in" />
 
                     <TextView
                         android:id="@+id/delivery_btn_txt"
@@ -66,7 +66,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@string/Delivery" />
+                        android:text="@string/Dine_in" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -85,8 +85,8 @@
                         app:tint="@color/black"
                         android:background="@drawable/add_btn_bg"
                         android:contentDescription="@string/Takeaway"
-                        android:padding="10dp"
-                        android:src="@drawable/delivery" />
+                        android:padding="5dp"
+                        android:src="@drawable/take_away" />
 
                     <TextView
                         android:id="@+id/takeaway_btn_txt"

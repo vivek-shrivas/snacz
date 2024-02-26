@@ -1,14 +1,22 @@
 package com.example.snacz;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -23,8 +31,10 @@ public class Cart extends AppCompatActivity {
 
     CartAdapter cartAdapter;
 
+    TextView clearAllTextView;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cart);
 
@@ -36,6 +46,7 @@ public class Cart extends AppCompatActivity {
         // Initialize views
         cartRecyclerView = findViewById(R.id.cartRecycler);
         placeOrderButton = findViewById(R.id.placeOrderButton);
+        clearAllTextView = findViewById(R.id.clearAllTextView);
 
         // Set up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -56,6 +67,20 @@ public class Cart extends AppCompatActivity {
             public void onClick(View v) {
                 Order order = Order.getInstance();
                 Order.getInstance().pushOrderToFirebase(getApplicationContext(), order);
+                Toast toast= Toast.makeText(getApplicationContext(),"Order placed Successfully",Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        // Set onClick listener for clearAllTextView
+        clearAllTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Perform the desired action when clearAllTextView is clicked
+                // For example, clear all items from the list
+                Order.getInstance().getItems().clear();
+                cartAdapter.notifyDataSetChanged();
+                updateTotalPayable(); // Update total payable after clearing all items
             }
         });
     }
@@ -64,12 +89,13 @@ public class Cart extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateData(Order.getInstance().getItems());
+        List<Item> itemList = Order.getInstance().getItems();
+        cartAdapter = new CartAdapter(itemList, this);
+        cartRecyclerView.setAdapter(cartAdapter);
         updateTotalPayable(); // Update total payable whenever activity resumes
     }
 
     private void updateData(List<Item> itemList) {
-
-
         if (cartAdapter != null) {
             cartAdapter.setData(itemList);
         }
@@ -83,13 +109,13 @@ public class Cart extends AppCompatActivity {
 
         // Display total amount, CGST, and SGST in respective TextViews
         subTotal.setText(String.valueOf(totalAmount));
-        CGST.setText(String.valueOf(Order.getInstance().CGST));
-        SGST.setText(String.valueOf(Order.getInstance().SGST));
+        CGST.setText(String.valueOf("₹"+Order.getInstance().CGST));
+        SGST.setText(String.valueOf("₹"+Order.getInstance().SGST));
 
         // Calculate total payable amount (Total + CGST + SGST)
         int totalPayableAmount = totalAmount + Order.getInstance().SGST + Order.getInstance().CGST;
-        totalPayable.setText(String.valueOf(totalPayableAmount));
-        placeOrderButton.setText(String.valueOf(totalPayableAmount));
+        totalPayable.setText("₹"+String.valueOf(totalPayableAmount));
+        placeOrderButton.setText("₹"+String.valueOf(totalPayableAmount));
     }
 
     // Update total payable amount when called

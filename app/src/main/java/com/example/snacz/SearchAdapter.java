@@ -4,9 +4,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,31 +38,90 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private TextView itemDescTextView;
         private TextView itemPriceTextView;
 
+        private Button addBtn, increaseBtn, decreaseBtn;
+        LinearLayout increaseDecreaseHolder;
+        TextView itemQuantityTextView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // Initialize your views here
             itemImageView = itemView.findViewById(R.id.itemImageView);
-            itemNameTextView = itemView.findViewById(R.id.itemNameTextView);
-            itemDescTextView = itemView.findViewById(R.id.itemDescTextView);
+            itemNameTextView = itemView.findViewById(R.id.foodName);
+            itemDescTextView = itemView.findViewById(R.id.foodDesc);
             itemPriceTextView = itemView.findViewById(R.id.price);
+            itemQuantityTextView = itemView.findViewById(R.id.itemQuantity);
+            addBtn = itemView.findViewById(R.id.addBtn);
+            increaseDecreaseHolder = itemView.findViewById(R.id.itemBtnIncreaseQtyDecreaseQtyholder);
+            increaseBtn = itemView.findViewById(R.id.increaseQuantity);
+            decreaseBtn = itemView.findViewById(R.id.decraseQuantity);
         }
 
-        // Method to bind data to views
         // Method to bind data to views
         public void bind(Item item) {
-            // Initialize views
-            ImageView itemImageView = itemView.findViewById(R.id.itemImageView);
-            TextView foodNameTextView = itemView.findViewById(R.id.foodName);
-            TextView foodDescTextView = itemView.findViewById(R.id.foodDesc);
-            TextView priceTextView = itemView.findViewById(R.id.price);
-
             // Bind data to views
             Glide.with(itemView.getContext()).load(item.getImage()).into(itemImageView);
-            foodNameTextView.setText(item.getItemName());
-            foodDescTextView.setText(item.getItemDesc());
-            priceTextView.setText(String.valueOf(item.getPrice()));
+            itemNameTextView.setText(item.getItemName());
+            itemDescTextView.setText(item.getItemDesc());
+            itemPriceTextView.setText(String.valueOf(item.getPrice()));
+
+            Order order = Order.getInstance();
+
+            decreaseBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int itemQuantity = item.getItemQuantity();
+                    if (itemQuantity <= 1) {
+                        increaseDecreaseHolder.setVisibility(View.GONE);
+                        addBtn.setVisibility(View.VISIBLE);
+                        order.calculateTotal();
+                        order.removeItem(item);
+                        notifyDataSetChanged(); // Notify adapter of dataset change
+                    } else {
+                        item.decreaseQuantity();
+                        itemQuantityTextView.setText(String.valueOf(item.getItemQuantity()));
+                        notifyDataSetChanged(); // Notify adapter of dataset change
+                    }
+                }
+            });
+
+            increaseBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    item.increaseQuantity();
+                    itemQuantityTextView.setText(String.valueOf(item.getItemQuantity()));
+                    notifyDataSetChanged(); // Notify adapter of dataset change
+                }
+            });
+
+            addBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isItemInOrder(item)) {
+                        addBtn.setVisibility(View.INVISIBLE);
+                        order.addItem(item);
+                        increaseDecreaseHolder.setVisibility(View.VISIBLE);
+                        item.increaseQuantity();
+                        notifyDataSetChanged(); // Notify adapter of dataset change
+                    }
+                }
+            });
         }
 
+        private boolean isItemInOrder(Item item) {
+            Order order = Order.getInstance();
+            List<Item> orderItems = order.getItems();
+
+            // Loop through each item in the orderItems list
+            for (Item orderItem : orderItems) {
+                // Check if the item_id of the current orderItem matches the item_id of the item we're looking for
+                if (orderItem.getItemId().equals(item.getItemId())) {
+                    // Item with the same ID found in the order, return true
+                    return true;
+                }
+            }
+            // Item with the same ID not found in the order, return false
+            return false;
+        }
     }
 
     @NonNull
@@ -136,5 +197,4 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         // Notify adapter of data change
         notifyDataSetChanged();
     }
-
 }

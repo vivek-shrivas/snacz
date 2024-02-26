@@ -38,6 +38,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         holder.bind(item);
     }
 
+    public void setData(List<Item> newData) {
+        this.itemList = newData;
+        notifyDataSetChanged(); // Notify adapter of dataset change
+    }
+
+
+
     @Override
     public int getItemCount() {
         return itemList.size();

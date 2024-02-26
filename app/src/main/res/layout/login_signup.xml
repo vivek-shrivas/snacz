@@ -48,6 +48,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="45dp"
+                    android:text="Enter your Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/message3"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_rectangle">
+
+                    <EditText
+                        android:id="@+id/userNameEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter your Name "/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Enter your mobile number"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />

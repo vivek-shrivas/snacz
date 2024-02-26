@@ -61,7 +61,6 @@
             deliveryButton = view.findViewById(R.id.delivery_btn);
             takeawayButton = view.findViewById(R.id.takeaway_btn);
             Order order =Order.getInstance();
-            order.setOrderType(Order.delivery);
             // Set the deliveryButton to be checked by default
             deliveryButton.setSelected(true);
 
@@ -72,10 +71,13 @@
 
                 takeawayButton.setBackgroundTintList(createColorStateList(R.color.white));
             }
-            else{
+            else if(order.getOrderType()==Order.takeaway){
                 order.setOrderType(Order.takeaway);
                 deliveryButton.setBackgroundTintList(createColorStateList(R.color.white));
                 takeawayButton.setBackgroundTintList(createColorStateList(R.color.red));
+            }
+            else{
+                order.setOrderType(Order.delivery);
             }
             deliveryButton.setOnClickListener(v -> updateOrderType(String.valueOf(Order.delivery)));
             takeawayButton.setOnClickListener(v -> updateOrderType(String.valueOf(Order.takeaway)));
@@ -106,6 +108,27 @@
             return view;
         }
 
+        @Override
+        public void onResume(){
+            super.onResume();
+            Order order=Order.getInstance();
+            if(order.getOrderType()==Order.delivery){
+                order.setOrderType(Order.delivery);
+                // Optionally: Add logic to update UI based on the order type change
+                deliveryButton.setBackgroundTintList(createColorStateList(R.color.red));
+
+                takeawayButton.setBackgroundTintList(createColorStateList(R.color.white));
+            }
+            else if(order.getOrderType()==Order.takeaway){
+                order.setOrderType(Order.takeaway);
+                deliveryButton.setBackgroundTintList(createColorStateList(R.color.white));
+                takeawayButton.setBackgroundTintList(createColorStateList(R.color.red));
+            }
+            else{
+                order.setOrderType(Order.delivery);
+            }
+
+        }
 
         private void updateOrderType(String orderType) {
             currentOrder.setOrderType(Integer.parseInt(orderType));

@@ -3,9 +3,11 @@ package com.example.snacz;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +24,9 @@ public class PhoneNumberEntryActivity extends AppCompatActivity {
     private EditText mobileNumberEditText;
     private Button requestOtpButton;
     private String phoneNumber;
+    private String userName;
+
+    private TextView userNameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +37,19 @@ public class PhoneNumberEntryActivity extends AppCompatActivity {
 
         mobileNumberEditText = findViewById(R.id.mobileNumberEditText);
         requestOtpButton = findViewById(R.id.verifyButton);
+        userNameEditText =findViewById(R.id.userNameEditText);
 
         requestOtpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 phoneNumber = mobileNumberEditText.getText().toString().trim();
+                userName = userNameEditText.getText().toString().trim();
+                Log.d("","the phone number is ");
+
+                if (userName.isEmpty()) {
+                    Toast.makeText(getApplicationContext(),"Name cannot be Empty",Toast.LENGTH_SHORT).show();
+                }
+
                 if (isValidPhoneNumber(phoneNumber)) {
                     if (!phoneNumber.startsWith("+91")) {
                         phoneNumber = "+91" + phoneNumber;
@@ -75,6 +88,7 @@ public class PhoneNumberEntryActivity extends AppCompatActivity {
                         Intent intent = new Intent(PhoneNumberEntryActivity.this, OtpVerificationActivity.class);
                         intent.putExtra("verificationId", verificationId);
                         intent.putExtra("phoneNumber",phoneNumber);
+                        intent.putExtra("userName",userName);
                         startActivity(intent);
                     }
 

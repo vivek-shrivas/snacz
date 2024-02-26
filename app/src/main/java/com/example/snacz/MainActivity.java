@@ -1,5 +1,7 @@
 package com.example.snacz;
 
+import static java.security.AccessController.getContext;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -7,12 +9,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -46,6 +50,19 @@ public class MainActivity extends AppCompatActivity {
                     loadFrag(new menu(), false);
                 } else if (id == R.id.search) {
                     loadFrag(new search(), false);
+                } else if (id == R.id.account) {
+                    loadFrag(new Account(), false);
+                }
+                else if(id==R.id.cart){
+                    Order order=Order.getInstance();
+                    if (order.hasItems()){
+                        Intent intent =new Intent(getApplicationContext(), Cart.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast toast=Toast.makeText(getApplicationContext(),"Your Cart is empty",Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
 
                 // Clear color filter for all items
@@ -63,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
         // bottom navigation item default selection
         bnView.setSelectedItemId(R.id.home);
+        bnView.setItemTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.black));
+
 
     }
 

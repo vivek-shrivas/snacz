@@ -37,6 +37,8 @@ public class menu extends Fragment {
     TextView CartTotal,viewCartItemQuantity;
 
     MainActivity mainActivity;
+
+    String categoryName;
     private CategoryItemsAdapter categoryItemsAdapter;
 
     public menu() {
@@ -59,13 +61,19 @@ public class menu extends Fragment {
         Order order = Order.getInstance();
         mainActivity = new MainActivity();
 
-        // To get the first category name when the bottom navigation is clicked for the menu fragment and the first category items should get loaded automatically
-        fetchFirstCategoryName();
-
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            categoryName = bundle.getString("categoryName");
+            onCategorySelected(categoryName);
+            Log.d("",""+categoryName);
+        }
+        else {
+            onCategorySelected("Festive Sharing");
+            Log.d("i got here", "i got here ");
+        }
         // Check if Order contains items and set visibility accordingly
         if (order.hasItems()) {
             viewCartFrameLayoutMenu.setVisibility(View.VISIBLE);
-            Log.d("i got here", "i got here ");
         } else {
             viewCartFrameLayoutMenu.setVisibility(View.INVISIBLE);
         }
@@ -127,7 +135,7 @@ public class menu extends Fragment {
                     if (firstCategoryName != null) {
                         // Do something with the first category name
                         // For example, call a method passing the first category name
-                        onCategorySelected(firstCategoryName);
+//                        onCategorySelected(firstCategoryName);
                         break; // Exit the loop after getting the first category name
                     }
                 }

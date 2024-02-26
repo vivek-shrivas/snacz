@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-    android:id="@+id/home"
-    android:title="@string/home_btn"
-    android:icon="@drawable/baseline_home_24"
-        app:itemBackground="@drawable/white_bg_rectangle"/>
 
-    <item
+    <!-- Define text color for the menu items -->
+    <item android:title="@string/home_btn"
+        android:id="@+id/home"
+        android:icon="@drawable/baseline_home_24"
+        app:itemBackground="@drawable/white_bg_rectangle"
+        android:textColor="@android:color/black"
+        style="@style/BottomNavViewStyle"/>
+
+    <item android:title="@string/menu_btn"
         android:id="@+id/menu"
-        android:title="@string/menu_btn"
         android:icon="@drawable/food_menu"
-        app:itemBackground="@drawable/white_bg_rectangle"/>
+        app:itemBackground="@drawable/white_bg_rectangle"
+        android:textColor="@android:color/black"
+        style="@style/BottomNavViewStyle"
+        />
 
-    <item
+    <item android:title="@string/search_btn"
         android:id="@+id/search"
-        android:title="@string/search_btn"
         android:icon="@drawable/baseline_search_24"
-        app:itemBackground="@drawable/white_bg_rectangle"/>
+        app:itemBackground="@drawable/white_bg_rectangle"
+        android:textColor="@android:color/black"
+        style="@style/BottomNavViewStyle"/>
+
+
+    <item android:title="@string/account_btn"
+        android:id="@+id/cart"
+        android:icon="@drawable/shopping_cart"
+        app:itemBackground="@drawable/white_bg_rectangle"
+        android:textColor="@android:color/black"
+        style="@style/BottomNavViewStyle"/>
+
+    <item android:title="@string/cart"
+        android:id="@+id/account"
+        android:icon="@drawable/user"
+        app:itemBackground="@drawable/white_bg_rectangle"
+        android:textColor="@android:color/black"
+        style="@style/BottomNavViewStyle"/>
 </menu>
